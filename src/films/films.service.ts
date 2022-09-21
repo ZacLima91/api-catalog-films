@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { Film } from './entity/films.entity';
 
 @Injectable()
 export class FilmsService {
-  films: Film[] = [];
+  constructor(private readonly prisma: PrismaService){}
 
-  getAll() {
-    return this.films;
+  getAll(): Promise<Film[]> {
+    return this.prisma.film.findMany();
   }
 }
